@@ -51,5 +51,25 @@ function keyup() {
     }
 }
 
+function context_move(x, y) {
+    context_menu = document.getElementById('context');
+    context_menu.style.left = x + 'px';
+    context_menu.style.top = y + 'px';
+}
+
+function context_toggle_visibility(e) {
+    context_menu = document.getElementById('context');
+    if (e.button === 2) {
+        context_menu.style.transition = "0.0s";
+        context_move(e.pageX, e.pageY);
+        context_menu.classList.remove("hidden");
+    } else if (e.button === 0 && e.target.offsetParent != context) {
+        context_menu.style.transition = "0.25s";
+        context_menu.classList.add("hidden");
+    }
+}
+
 window.addEventListener('load', load);
 window.addEventListener('keyup', keyup);
+window.addEventListener('mouseup', context_toggle_visibility);
+window.addEventListener('contextmenu', (e) => { e.preventDefault() });
